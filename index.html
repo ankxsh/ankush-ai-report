@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in 2026: Impact, Adoption & Industry Transformation</title>
+    <meta name="description" content="Data-driven report on AI origins, business impact, India's AI landscape, skills roadmap for freshers, and industry implementation.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0a0f; --bg-secondary: #12121a;
+            --bg-card: rgba(255,255,255,0.04); --bg-card-hover: rgba(255,255,255,0.07);
+            --glass-border: rgba(255,255,255,0.08);
+            --text-primary: #f0f0f5; --text-secondary: #8888a0; --text-muted: #55556a;
+            --accent-1: #6366f1; --accent-2: #8b5cf6; --accent-3: #06b6d4;
+            --accent-4: #10b981; --accent-5: #f59e0b; --accent-6: #ef4444;
+            --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-2: linear-gradient(135deg, #06b6d4, #10b981);
+            --gradient-3: linear-gradient(135deg, #f59e0b, #ef4444);
+            --radius: 16px; --radius-sm: 10px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow: hidden; height: 100vh; width: 100vw; }
+
+        .deck { position: relative; width: 100vw; height: 100vh; }
+        .slide {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            padding: 48px 64px; opacity: 0; transform: translateX(60px);
+            pointer-events: none; transition: opacity 0.5s ease, transform 0.5s ease; overflow-y: auto;
+        }
+        .slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.35; }
+        .glow-1 { width: 600px; height: 600px; background: #6366f1; top: -200px; right: -100px; }
+        .glow-2 { width: 500px; height: 500px; background: #06b6d4; bottom: -200px; left: -100px; }
+        .glow-3 { width: 400px; height: 400px; background: #8b5cf6; top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: 0.15; }
+
+        .nav-bar {
+            position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(18,18,26,0.85); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); padding: 10px 24px; border-radius: 60px; z-index: 100;
+        }
+        .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); border: none; cursor: pointer; transition: all 0.3s ease; }
+        .nav-dot.active { background: var(--accent-1); transform: scale(1.4); box-shadow: 0 0 12px var(--accent-1); }
+        .nav-dot:hover { background: var(--accent-2); transform: scale(1.2); }
+        .nav-btn {
+            background: none; border: 1px solid var(--glass-border); color: var(--text-secondary);
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: var(--accent-1); color: white; border-color: var(--accent-1); }
+        .slide-counter { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); min-width: 40px; text-align: center; }
+
+        .slide-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-3); margin-bottom: 12px; }
+        .slide-title {
+            font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.15; margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .slide-subtitle { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 700px; margin-bottom: 32px; }
+        h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+
+        .card { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 24px; backdrop-filter: blur(12px); transition: all 0.3s ease; }
+        .card:hover { background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .flex-row { display: flex; gap: 20px; align-items: stretch; }
+        .flex-1 { flex: 1; }
+
+        .stat-card { text-align: center; padding: 28px 20px; }
+        .stat-number { font-size: 2.4rem; font-weight: 900; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
+        .stat-number.green { background: var(--gradient-2); -webkit-background-clip: text; background-clip: text; }
+        .stat-number.orange { background: var(--gradient-3); -webkit-background-clip: text; background-clip: text; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px; font-weight: 500; }
+
+        .timeline { position: relative; padding-left: 32px; }
+        .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent-1), var(--accent-3), var(--accent-4)); }
+        .timeline-item { position: relative; margin-bottom: 20px; padding-left: 16px; opacity: 0; transform: translateX(20px); animation: slideIn 0.5s forwards; }
+        .timeline-item::before { content: ''; position: absolute; left: -29px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-1); border: 2px solid var(--bg-primary); box-shadow: 0 0 10px var(--accent-1); }
+        .timeline-year { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-3); font-weight: 600; margin-bottom: 2px; }
+        .timeline-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
+        .timeline-text strong { color: var(--text-primary); }
+        @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; } .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; } .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; } .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(7) { animation-delay: 0.7s; } .timeline-item:nth-child(8) { animation-delay: 0.8s; }
+
+        .chart-wrap { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 24px; position: relative; }
+        .chart-wrap canvas { max-height: 280px; }
+        .chart-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 12px; }
+
+        .heat-table { width: 100%; border-collapse: separate; border-spacing: 4px; }
+        .heat-table th { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 8px 12px; text-align: left; }
+        .heat-table td { padding: 10px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-align: center; transition: transform 0.2s; }
+        .heat-table td:first-child { text-align: left; color: var(--text-secondary); font-weight: 500; background: transparent; }
+        .heat-table td:hover { transform: scale(1.05); }
+        .heat-high { background: rgba(16,185,129,0.25); color: #34d399; }
+        .heat-med { background: rgba(245,158,11,0.2); color: #fbbf24; }
+        .heat-low { background: rgba(99,102,241,0.2); color: #818cf8; }
+        .heat-vlow { background: rgba(239,68,68,0.15); color: #f87171; }
+
+        .badge-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .badge { font-size: 0.72rem; padding: 5px 14px; border-radius: 20px; font-weight: 600; letter-spacing: 0.5px; }
+        .badge-purple { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.25); }
+        .badge-teal { background: rgba(6,182,212,0.15); color: #22d3ee; border: 1px solid rgba(6,182,212,0.25); }
+        .badge-green { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+        .badge-orange { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+
+        .kpi-row { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+        .kpi { flex: 1; min-width: 140px; text-align: center; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 18px 12px; }
+        .kpi-val { font-size: 1.6rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .kpi-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        .case-card { padding: 20px; }
+        .case-icon { font-size: 1.8rem; margin-bottom: 10px; }
+        .case-name { font-size: 0.82rem; font-weight: 700; color: var(--accent-3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .case-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+        .case-stat { font-size: 1.3rem; font-weight: 800; color: var(--accent-4); }
+        .case-stat-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        .rec-list { list-style: none; }
+        .rec-list li { position: relative; padding: 12px 16px 12px 40px; margin-bottom: 10px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); }
+        .rec-list li::before { content: '→'; position: absolute; left: 14px; top: 12px; color: var(--accent-4); font-weight: 700; font-size: 1rem; }
+        .rec-list li strong { color: var(--text-primary); }
+
+        .author-bar { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--text-muted); }
+        .author-bar span { letter-spacing: 0.5px; }
+
+        .title-slide { justify-content: center; align-items: flex-start; }
+        .title-slide .slide-title { font-size: clamp(2.6rem, 5vw, 4rem); margin-bottom: 20px; }
+        .title-meta { display: flex; gap: 32px; margin-top: 20px; font-size: 0.78rem; color: var(--text-muted); }
+        .title-meta span { display: flex; align-items: center; gap: 6px; }
+
+        .slide-body { flex: 1; overflow-y: auto; padding-bottom: 80px; }
+        .slide-body::-webkit-scrollbar { width: 4px; }
+        .slide-body::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 4px; }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: fixed; bottom: 76px; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 8px; padding: 8px 20px;
+            background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 30px; font-size: 0.72rem; color: #818cf8; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase; z-index: 99;
+            animation: scrollBounce 2s infinite; pointer-events: none;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .scroll-hint.visible { opacity: 1; }
+        .scroll-hint .arrow { animation: scrollArrow 1.5s infinite; display: inline-block; }
+        @keyframes scrollBounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
+        @keyframes scrollArrow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+
+        /* Abbreviation tooltip */
+        .abbr-box { margin-top: 16px; padding: 12px 16px; background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15); border-radius: var(--radius-sm); }
+        .abbr-box .abbr-title { font-size: 0.68rem; color: var(--accent-1); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
+        .abbr-box p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.8; }
+
+        @media print { body { overflow: visible; } .slide { position: relative; opacity: 1; transform: none; pointer-events: all; page-break-after: always; } .nav-bar, .bg-glow, .scroll-hint { display: none; } }
+        @media (max-width: 900px) { .slide { padding: 32px 28px; } .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .flex-row { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow glow-1"></div>
+<div class="bg-glow glow-2"></div>
+<div class="bg-glow glow-3"></div>
+
+<!-- Scroll hint indicator -->
+<div class="scroll-hint" id="scrollHint"><span class="arrow">↓</span> Scroll down for more</div>
+
+<div class="deck" id="deck">
+
+    <!-- ═══════════ SLIDE 1: TITLE ═══════════ -->
+    <div class="slide title-slide active" data-slide="0">
+        <div class="slide-tag">Data-Driven Report · March 2026</div>
+        <h1 class="slide-title">Artificial Intelligence:<br>Impact, Adoption &amp;<br>Industry Transformation</h1>
+        <p class="slide-subtitle">
+            A comprehensive analysis of AI's evolution, its measurable impact on global business,
+            India's AI landscape, essential skills for freshers &amp; students, and strategic adoption
+            frameworks — backed by data from McKinsey, Gartner, Stanford AI Index &amp; PwC.
+        </p>
+        <div class="grid-4" style="max-width: 800px;">
+            <div class="card stat-card"><div class="stat-number">$244B</div><div class="stat-label">AI Market 2025</div></div>
+            <div class="card stat-card"><div class="stat-number green">72%</div><div class="stat-label">Enterprise Adoption</div></div>
+            <div class="card stat-card"><div class="stat-number orange">40%</div><div class="stat-label">Productivity Gain</div></div>
+            <div class="card stat-card"><div class="stat-number">$15.7T</div><div class="stat-label">GDP Impact by 2030</div></div>
+        </div>
+        <div class="title-meta">
+            <span>📊 Prepared by: Ankush Sharma</span>
+            <span>📅 March 2026</span>
+            <span>🔑 Use ← → arrow keys to navigate</span>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 2: OVERVIEW ═══════════ -->
+    <div class="slide" data-slide="1">
+        <div class="slide-tag">Overview</div>
+        <h1 class="slide-title">What This Report Covers</h1>
+        <p class="slide-subtitle">A quick guide to each section of this presentation.</p>
+        <div class="slide-body">
+            <div class="grid-2" style="gap: 16px;">
+                <div class="card" style="padding: 20px; border-left: 3px solid var(--accent-1);">
+                    <h3 style="color: var(--accent-1); font-size: 0.9rem;">📜 Slide 3 — Origins & Evolution of AI</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-top: 6px;">A timeline from Alan Turing's 1950 paper to the 2026 agentic AI era, paired with a global AI investment chart showing the 6× growth from 2019 to 2024.</p>
+                </div>
+                <div class="card" style="padding: 20px; border-left: 3px solid var(--accent-4);">
+                    <h3 style="color: var(--accent-4); font-size: 0.9rem;">📊 Slide 4 — AI's Impact on Business</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-top: 6px;">Measurable effects across departments — 37% avg cost reduction, 40% productivity uplift, and 3.5× ROI. Includes charts on productivity gains and impact distribution by function.</p>
+                </div>
+                <div class="card" style="padding: 20px; border-left: 3px solid var(--accent-5);">
+                    <h3 style="color: var(--accent-5); font-size: 0.9rem;">🇮🇳 Slide 5 — AI in India</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-top: 6px;">India's $6B+ AI market, the ₹10,372 Cr IndiaAI Mission, government initiatives (NITI Aayog, Digital India), and the booming startup ecosystem — with sector-wise adoption data.</p>
+                </div>
+                <div class="card" style="padding: 20px; border-left: 3px solid var(--accent-3);">
+                    <h3 style="color: var(--accent-3); font-size: 0.9rem;">🎓 Slide 6 — Skills for Freshers & Students</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-top: 6px;">The skill demand vs. graduate readiness gap, must-have skills for 2026, and separate learning paths for college students and fresh graduates.</p>
+                </div>
+                <div class="card" style="padding: 20px; border-left: 3px solid var(--accent-2);">
+                    <h3 style="color: var(--accent-2); font-size: 0.9rem;">🏦 Slide 7 — AI in Banking & Industry</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-top: 6px;">Real-world AI implementation across Banking, Healthcare, Retail, and Manufacturing — with ROI data, use case adoption rates, and case studies with dollar-value impact.</p>
+                </div>
+                <div class="card" style="padding: 20px; border-left: 3px solid var(--accent-6);">
+                    <h3 style="color: var(--accent-6); font-size: 0.9rem;">🚀 Slide 8 — Your AI Career Roadmap</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-top: 6px;">Actionable advice split into "While Still in College" and "Entering the Workforce" — practical steps on portfolio building, domain specialization, and staying ahead of the AI curve.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3: ORIGINS ═══════════ -->
+    <div class="slide" data-slide="2">
+        <div class="slide-tag">Chapter 01</div>
+        <h1 class="slide-title">Origins &amp; Evolution of AI</h1>
+        <p class="slide-subtitle">From theoretical foundations to trillion-dollar industry — a 75-year journey.</p>
+        <div class="slide-body">
+            <div class="flex-row">
+                <div class="flex-1">
+                    <div class="timeline">
+                        <div class="timeline-item"><div class="timeline-year">1950</div><div class="timeline-text"><strong>Alan Turing</strong> publishes "Computing Machinery and Intelligence" — proposes the <strong>Turing Test</strong></div></div>
+                        <div class="timeline-item"><div class="timeline-year">1956</div><div class="timeline-text"><strong>Dartmouth Conference</strong> — John McCarthy coins the term "Artificial Intelligence"; the field is officially born</div></div>
+                        <div class="timeline-item"><div class="timeline-year">1966-1974</div><div class="timeline-text"><strong>First AI Winter</strong> — Funding dries up after ALPAC report; early NLP systems fail to deliver</div></div>
+                        <div class="timeline-item"><div class="timeline-year">1980s</div><div class="timeline-text"><strong>Expert Systems boom</strong> — Rule-based AI generates $1B+ in enterprise revenue; Japan's Fifth Generation project</div></div>
+                        <div class="timeline-item"><div class="timeline-year">1997</div><div class="timeline-text"><strong>IBM Deep Blue</strong> defeats world chess champion Garry Kasparov — AI enters mainstream consciousness</div></div>
+                        <div class="timeline-item"><div class="timeline-year">2012</div><div class="timeline-text"><strong>AlexNet &amp; Deep Learning</strong> revolution — ImageNet error rate drops 10.8%; GPU-powered neural networks take off</div></div>
+                        <div class="timeline-item"><div class="timeline-year">2017-2022</div><div class="timeline-text"><strong>Transformer Architecture</strong> → GPT, BERT, DALL-E — generative AI emerges; global AI investment hits $93.5B (2021)</div></div>
+                        <div class="timeline-item"><div class="timeline-year">2023-2026</div><div class="timeline-text"><strong>LLM &amp; Agentic AI era</strong> — GPT-4, Gemini, Claude; AI agents automate workflows; enterprise adoption crosses 72%</div></div>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="chart-wrap" style="margin-bottom: 20px;">
+                        <div class="chart-label">Global AI Investment ($B) — Year over Year</div>
+                        <canvas id="chartInvestment"></canvas>
+                    </div>
+                    <div class="card" style="padding: 18px;">
+                        <h3 style="color: var(--accent-3); font-size: 0.85rem;">Key Insight</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-top: 6px;">
+                            AI investment grew <strong style="color: var(--accent-4);">6× in just 5 years</strong> (2019-2024).
+                            The shift from rule-based systems to deep learning to generative AI represents
+                            not incremental change but <strong>paradigm shifts</strong> — each unlocking
+                            entirely new categories of business value. The current agentic AI wave is projected
+                            to automate 30% of knowledge work tasks by 2028.
+                        </p>
+                    </div>
+                    <div class="abbr-box">
+                        <div class="abbr-title">Abbreviations</div>
+                        <p>NLP = Natural Language Processing · LLM = Large Language Model · GPU = Graphics Processing Unit · BERT = Bidirectional Encoder Representations from Transformers · GPT = Generative Pre-trained Transformer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 3: BUSINESS IMPACT ═══════════ -->
+    <div class="slide" data-slide="3">
+        <div class="slide-tag">Chapter 02</div>
+        <h1 class="slide-title">AI's Impact on the Business Environment</h1>
+        <p class="slide-subtitle">Measurable productivity, cost, and revenue effects across sectors.</p>
+        <div class="slide-body">
+            <div class="kpi-row">
+                <div class="kpi"><div class="kpi-val">37%</div><div class="kpi-label">Avg Cost Reduction</div></div>
+                <div class="kpi"><div class="kpi-val">40%</div><div class="kpi-label">Productivity Uplift</div></div>
+                <div class="kpi"><div class="kpi-val">3.5×</div><div class="kpi-label">ROI on AI Projects</div></div>
+                <div class="kpi"><div class="kpi-val">$4.4T</div><div class="kpi-label">Annual Value Add</div></div>
+                <div class="kpi"><div class="kpi-val">26%</div><div class="kpi-label">Revenue Growth</div></div>
+            </div>
+            <div class="grid-2">
+                <div class="chart-wrap">
+                    <div class="chart-label">Productivity Gain by Department (%)</div>
+                    <canvas id="chartProductivity"></canvas>
+                </div>
+                <div class="chart-wrap">
+                    <div class="chart-label">AI Impact Distribution by Business Function</div>
+                    <canvas id="chartImpact"></canvas>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 20px; padding: 18px;">
+                <div class="grid-3" style="gap:24px;">
+                    <div>
+                        <h3 style="color: var(--accent-4); font-size: 0.85rem;">🟢 Customer Experience</h3>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6;">
+                            AI chatbots handle <strong>68%</strong> of customer queries. NPS (Net Promoter Score) increases
+                            <strong>23 points</strong> with AI-powered personalization. Response time cut from <strong>12 min → 45 sec</strong>.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-5); font-size: 0.85rem;">🟡 Supply Chain</h3>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6;">
+                            Demand forecasting accuracy improved by <strong>35%</strong>. Inventory waste reduced
+                            <strong>$280B</strong> globally. Logistics costs down <strong>15-20%</strong> with AI route optimization.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-2); font-size: 0.85rem;">🟣 Decision Making</h3>
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6;">
+                            Data-driven decisions are <strong>5× faster</strong>. Predictive analytics reduces
+                            strategic errors by <strong>42%</strong>. Real-time dashboards adopted by <strong>89%</strong> of Fortune 500.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="abbr-box">
+                <div class="abbr-title">Abbreviations</div>
+                <p>ROI = Return on Investment · NPS = Net Promoter Score · KPI = Key Performance Indicator · R&D = Research & Development</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 4: AI IN INDIA ═══════════ -->
+    <div class="slide" data-slide="4">
+        <div class="slide-tag">Chapter 03 · India Focus</div>
+        <h1 class="slide-title">AI in India — The Rising Powerhouse</h1>
+        <p class="slide-subtitle">India's AI ecosystem is accelerating — from government policy to startup innovation.</p>
+        <div class="slide-body">
+            <div class="kpi-row">
+                <div class="kpi"><div class="kpi-val">$6B+</div><div class="kpi-label">India AI Market 2025</div></div>
+                <div class="kpi"><div class="kpi-val">₹10,372 Cr</div><div class="kpi-label">IndiaAI Mission Budget</div></div>
+                <div class="kpi"><div class="kpi-val">3rd</div><div class="kpi-label">Largest AI Talent Pool</div></div>
+                <div class="kpi"><div class="kpi-val">$17B</div><div class="kpi-label">Projected by 2028</div></div>
+                <div class="kpi"><div class="kpi-val">1,200+</div><div class="kpi-label">AI Startups in India</div></div>
+            </div>
+            <div class="grid-2">
+                <div class="chart-wrap">
+                    <div class="chart-label">India AI Market Growth ($B) — Projections</div>
+                    <canvas id="chartIndiaGrowth"></canvas>
+                </div>
+                <div class="chart-wrap">
+                    <div class="chart-label">AI Adoption by Indian Sectors (%)</div>
+                    <canvas id="chartIndiaSectors"></canvas>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-top: 20px;">
+                <div class="card" style="padding: 18px;">
+                    <h3 style="color: var(--accent-4); font-size: 0.85rem;">🇮🇳 Government Initiatives</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; margin-top: 6px;">
+                        → <strong>IndiaAI Mission</strong> — ₹10,372 crore allocated for AI compute, innovation, datasets & skilling<br>
+                        → <strong>Digital India Programme</strong> — AI-powered governance, DigiLocker, CoWIN<br>
+                        → <strong>NITI Aayog Strategy</strong> — National AI strategy focused on healthcare, agriculture, education, smart cities & infrastructure<br>
+                        → <strong>AI CoEs</strong> (Centres of Excellence) — IIT-led research hubs in Bangalore, Hyderabad, Chennai & Delhi
+                    </p>
+                </div>
+                <div class="card" style="padding: 18px;">
+                    <h3 style="color: var(--accent-3); font-size: 0.85rem;">🚀 Indian AI Ecosystem</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; margin-top: 6px;">
+                        → <strong>IT/ITES giants</strong> — TCS, Infosys, Wipro investing heavily in AI R&D; TCS has 50,000+ AI-trained staff<br>
+                        → <strong>AI Startups</strong> — Krutrim AI, Sarvam AI, Fractal AI building India-first LLMs in regional languages<br>
+                        → <strong>Banking AI</strong> — SBI, HDFC, ICICI deploying AI for fraud detection, credit scoring & chatbots<br>
+                        → <strong>Agriculture</strong> — AI-based crop advisories reaching 10M+ farmers via Kisan app
+                    </p>
+                </div>
+            </div>
+            <div class="abbr-box">
+                <div class="abbr-title">Abbreviations</div>
+                <p>NITI Aayog = National Institution for Transforming India · CoE = Centre of Excellence · IIT = Indian Institute of Technology · IT/ITES = Information Technology / IT-Enabled Services · SBI = State Bank of India · HDFC = Housing Development Finance Corporation · ICICI = Industrial Credit and Investment Corporation of India · LLM = Large Language Model · R&D = Research & Development</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 5: SKILLS FOR FRESHERS ═══════════ -->
+    <div class="slide" data-slide="5">
+        <div class="slide-tag">Chapter 04</div>
+        <h1 class="slide-title">Skills for Freshers &amp; Students</h1>
+        <p class="slide-subtitle">What college students and fresh graduates need to thrive in an AI-driven job market.</p>
+        <div class="slide-body">
+            <div class="flex-row">
+                <div class="flex-1">
+                    <div class="chart-wrap" style="margin-bottom: 20px;">
+                        <div class="chart-label">Skill Demand vs. Graduate Readiness — Gap Analysis</div>
+                        <canvas id="chartSkills"></canvas>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="card" style="margin-bottom: 16px; padding: 20px;">
+                        <h3 style="color: var(--accent-1);">🎯 Must-Have Skills for 2026 Job Market</h3>
+                        <div class="badge-group" style="margin-top: 10px;">
+                            <span class="badge badge-purple">Python Programming</span>
+                            <span class="badge badge-teal">SQL & Databases</span>
+                            <span class="badge badge-green">Excel + Power BI</span>
+                            <span class="badge badge-orange">Prompt Engineering</span>
+                            <span class="badge badge-purple">Statistics & Probability</span>
+                            <span class="badge badge-teal">Git & GitHub</span>
+                            <span class="badge badge-green">AI Tools (ChatGPT, Copilot)</span>
+                            <span class="badge badge-orange">Communication Skills</span>
+                        </div>
+                    </div>
+                    <div class="grid-2" style="gap: 12px;">
+                        <div class="card" style="padding: 16px;">
+                            <h3 style="color: var(--accent-3); font-size: 0.82rem;">🎓 For College Students</h3>
+                            <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
+                                → Start with <strong>Python + SQL</strong> (free on Kaggle, freeCodeCamp)<br>
+                                → Build <strong>3-5 portfolio projects</strong> on GitHub<br>
+                                → Learn <strong>data visualization</strong> (Matplotlib, Power BI)<br>
+                                → Take <strong>Google Data Analytics</strong> certificate (free on Coursera)<br>
+                                → Join <strong>Kaggle competitions</strong> for practical experience
+                            </p>
+                        </div>
+                        <div class="card" style="padding: 16px;">
+                            <h3 style="color: var(--accent-4); font-size: 0.82rem;">🚀 For Fresh Graduates</h3>
+                            <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
+                                → Master <strong>AI-augmented workflows</strong> (Copilot, Code Interpreter)<br>
+                                → Learn <strong>cloud basics</strong> (AWS/Azure free tier)<br>
+                                → Pick a <strong>domain niche</strong> (Banking AI, Health AI, etc.)<br>
+                                → Build <strong>interactive dashboards</strong> as portfolio pieces<br>
+                                → Contribute to <strong>open-source AI projects</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top: 12px; padding: 16px;">
+                        <h3 style="color: var(--accent-6); font-size: 0.82rem;">⚠️ The Talent Gap — Why Freshers Have a Massive Opportunity</h3>
+                        <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; margin-top:6px;">
+                            <strong>3.5 million</strong> AI jobs unfilled globally (WEF). Only <strong>18%</strong>
+                            of organizations say their workforce is AI-ready. India produces <strong>1.5M+ tech graduates/year</strong>
+                            but only <strong>4.5% are AI-skilled</strong>. Freshers who bridge this gap command <strong>30-50% higher starting salaries</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="abbr-box">
+                <div class="abbr-title">Abbreviations</div>
+                <p>WEF = World Economic Forum · AWS = Amazon Web Services · SQL = Structured Query Language · API = Application Programming Interface · ML = Machine Learning</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 6: INDUSTRY IMPLEMENTATION ═══════════ -->
+    <div class="slide" data-slide="6">
+        <div class="slide-tag">Chapter 05</div>
+        <h1 class="slide-title">AI in Banking &amp; Industry</h1>
+        <p class="slide-subtitle">Real-world implementation across banking, healthcare, retail, and manufacturing.</p>
+        <div class="slide-body">
+            <div class="grid-2" style="margin-bottom: 20px;">
+                <div class="chart-wrap">
+                    <div class="chart-label">AI ROI by Industry (% Return on Investment)</div>
+                    <canvas id="chartROI"></canvas>
+                </div>
+                <div class="chart-wrap">
+                    <div class="chart-label">AI Use Cases — Adoption Rate by Sector (%)</div>
+                    <canvas id="chartUseCases"></canvas>
+                </div>
+            </div>
+            <div class="grid-4" style="gap: 14px;">
+                <div class="card case-card">
+                    <div class="case-icon">🏦</div><div class="case-name">Banking</div>
+                    <div class="case-desc">AI-driven fraud detection reduces false positives by 50%. KYC (Know Your Customer) processing: 3 days → 5 min. Robo-advisors managing $2.5T AUM (Assets Under Management) globally.</div>
+                    <div class="case-stat">$447B</div><div class="case-stat-label">Annual AI Value</div>
+                </div>
+                <div class="card case-card">
+                    <div class="case-icon">🏥</div><div class="case-name">Healthcare</div>
+                    <div class="case-desc">AI diagnostic accuracy at 94.5% for radiology. Drug discovery timelines reduced from 10 years to 2-3. Predictive patient readmission models saving $12B/yr.</div>
+                    <div class="case-stat">$187B</div><div class="case-stat-label">Market by 2030</div>
+                </div>
+                <div class="card case-card">
+                    <div class="case-icon">🛒</div><div class="case-name">Retail</div>
+                    <div class="case-desc">Personalization engines drive 35% of Amazon's revenue. AI demand forecasting cuts overstock by 30%. Dynamic pricing increases margins 5-10%.</div>
+                    <div class="case-stat">$31B</div><div class="case-stat-label">AI Spend in 2025</div>
+                </div>
+                <div class="card case-card">
+                    <div class="case-icon">🏭</div><div class="case-name">Manufacturing</div>
+                    <div class="case-desc">Predictive maintenance reduces downtime by 45%. Computer vision defect detection at 99.3% accuracy. Digital twins save $1.3B in prototyping costs.</div>
+                    <div class="case-stat">$68B</div><div class="case-stat-label">Industry 4.0 Market</div>
+                </div>
+            </div>
+            <div class="abbr-box">
+                <div class="abbr-title">Abbreviations</div>
+                <p>KYC = Know Your Customer · AUM = Assets Under Management · ROI = Return on Investment · NPS = Net Promoter Score · IoT = Internet of Things</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SLIDE 7: RECOMMENDATIONS FOR STUDENTS ═══════════ -->
+    <div class="slide" data-slide="7">
+        <div class="slide-tag">Conclusion</div>
+        <h1 class="slide-title">Your AI Career Roadmap</h1>
+        <p class="slide-subtitle">Actionable steps for students and freshers entering the AI-transformed workforce.</p>
+        <div class="slide-body">
+            <div class="flex-row">
+                <div class="flex-1">
+                    <h3 style="color: var(--accent-3); margin-bottom: 16px;">🎓 While Still in College</h3>
+                    <ul class="rec-list">
+                        <li><strong>Build before you certify</strong> — Recruiters value a GitHub portfolio with 5 real projects over 10 certificates. Build an end-to-end dashboard, a prediction model, or an automation script.</li>
+                        <li><strong>Learn Python + SQL first, everything else second</strong> — 90% of entry-level data/AI roles test these two. Master pandas, NumPy, and write complex joins before exploring ML frameworks.</li>
+                        <li><strong>Use AI tools daily — don't fight them</strong> — ChatGPT, GitHub Copilot, and Perplexity are your superpowers. Learn to prompt effectively; "prompt engineering" is now a real job skill on LinkedIn.</li>
+                        <li><strong>Start a blog or LinkedIn portfolio</strong> — Write about projects you've built. Explain data insights in simple English. Placement managers Google your name — give them something impressive.</li>
+                        <li><strong>Compete on Kaggle &amp; attend hackathons</strong> — Real-world datasets, pressure deadlines, and peer learning. A Kaggle bronze medal is worth more than a "completed Python course" badge.</li>
+                    </ul>
+                </div>
+                <div class="flex-1">
+                    <h3 style="color: var(--accent-4); margin-bottom: 16px;">💼 Entering the Workforce</h3>
+                    <ul class="rec-list">
+                        <li><strong>Pick a domain + AI intersection</strong> — "AI in Banking Risk" or "AI in Supply Chain" pays 30-50% more than generic data roles. Specialize early; the market rewards depth over breadth.</li>
+                        <li><strong>Learn to present data, not just analyze it</strong> — The highest-paid roles translate model outputs into business impact. Practice presenting findings to non-technical audiences with clear visuals.</li>
+                        <li><strong>Master the AI-augmented workflow</strong> — Combine Excel/SQL with AI copilots to 10× your output. Employers hire people who ship fast — AI tools are your competitive edge.</li>
+                        <li><strong>Network in the Indian AI ecosystem</strong> — Follow IndiaAI, NASSCOM AI, and ML India. Attend local meetups, apply to AI fellowships (Google, Microsoft, NITI Aayog).</li>
+                        <li><strong>Stay current: agentic AI is next</strong> — The next 2 years will see AI agents (autonomous task execution) reshape workflows. Learning LangChain, RAG, and agent frameworks now is career insurance.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="author-bar">
+                <span>📊 Prepared by: Ankush Sharma · AI Impact & Industry Transformation · March 2026</span>
+                <span>Sources: McKinsey, Gartner, Stanford HAI AI Index 2025, PwC, WEF, NASSCOM, IndiaAI</span>
+            </div>
+            <div class="abbr-box">
+                <div class="abbr-title">Abbreviations</div>
+                <p>NASSCOM = National Association of Software and Service Companies · RAG = Retrieval-Augmented Generation · ML = Machine Learning · WEF = World Economic Forum · NITI = National Institution for Transforming India</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation Bar -->
+<nav class="nav-bar" id="navBar">
+    <button class="nav-btn" id="prevBtn" aria-label="Previous slide">◀</button>
+    <button class="nav-dot active" data-goto="0"></button>
+    <button class="nav-dot" data-goto="1"></button>
+    <button class="nav-dot" data-goto="2"></button>
+    <button class="nav-dot" data-goto="3"></button>
+    <button class="nav-dot" data-goto="4"></button>
+    <button class="nav-dot" data-goto="5"></button>
+    <button class="nav-dot" data-goto="6"></button>
+    <button class="nav-dot" data-goto="7"></button>
+    <button class="nav-btn" id="nextBtn" aria-label="Next slide">▶</button>
+    <span class="slide-counter" id="slideCounter">1 / 8</span>
+</nav>
+
+<script>
+// ══════════════════════════════════════════════════════
+// SLIDE NAVIGATION
+// ══════════════════════════════════════════════════════
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.nav-dot');
+const counter = document.getElementById('slideCounter');
+const scrollHint = document.getElementById('scrollHint');
+let current = 0;
+let isAnimating = false;
+
+function checkScrollable() {
+    const slide = slides[current];
+    const body = slide.querySelector('.slide-body');
+    if (body && body.scrollHeight > body.clientHeight + 30) {
+        scrollHint.classList.add('visible');
+        body.addEventListener('scroll', function handler() {
+            if (body.scrollTop > 40) { scrollHint.classList.remove('visible'); body.removeEventListener('scroll', handler); }
+        });
+    } else {
+        scrollHint.classList.remove('visible');
+    }
+}
+
+function goToSlide(n) {
+    if (n === current || isAnimating || n < 0 || n >= slides.length) return;
+    isAnimating = true;
+    const dir = n > current ? 1 : -1;
+    const oldSlide = slides[current];
+    const newSlide = slides[n];
+
+    oldSlide.classList.remove('active');
+    oldSlide.style.transform = dir > 0 ? 'translateX(-60px)' : 'translateX(60px)';
+    oldSlide.style.opacity = '0';
+
+    newSlide.style.transition = 'none';
+    newSlide.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+    newSlide.style.opacity = '0';
+    newSlide.offsetHeight;
+
+    newSlide.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    newSlide.classList.add('active');
+    newSlide.style.transform = 'translateX(0)';
+    newSlide.style.opacity = '1';
+
+    // Reset scroll position
+    const newBody = newSlide.querySelector('.slide-body');
+    if (newBody) newBody.scrollTop = 0;
+
+    dots[current].classList.remove('active');
+    dots[n].classList.add('active');
+    current = n;
+    counter.textContent = `${n + 1} / ${slides.length}`;
+
+    // Re-render charts every time (replay animations)
+    renderChartsForSlide(n);
+
+    setTimeout(() => {
+        oldSlide.style.transform = ''; oldSlide.style.opacity = ''; oldSlide.style.transition = '';
+        newSlide.style.transform = ''; newSlide.style.opacity = ''; newSlide.style.transition = '';
+        isAnimating = false;
+        checkScrollable();
+    }, 550);
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => goToSlide(current - 1));
+document.getElementById('nextBtn').addEventListener('click', () => goToSlide(current + 1));
+dots.forEach(d => d.addEventListener('click', () => goToSlide(+d.dataset.goto)));
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goToSlide(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goToSlide(current - 1);
+});
+
+// ══════════════════════════════════════════════════════
+// CHART.JS
+// ══════════════════════════════════════════════════════
+Chart.defaults.color = '#8888a0';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.padding = 16;
+
+const chartInstances = {};
+function createChart(id, config) {
+    if (chartInstances[id]) chartInstances[id].destroy();
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    chartInstances[id] = new Chart(ctx, config);
+}
+
+// NO chartsRendered cache — animations replay every visit
+function renderChartsForSlide(n) {
+    if (n === 2) renderSlide2Charts();
+    if (n === 3) renderSlide3Charts();
+    if (n === 4) renderSlide4Charts();
+    if (n === 5) renderSlide5Charts();
+    if (n === 6) renderSlide6Charts();
+}
+
+function renderSlide2Charts() {
+    createChart('chartInvestment', {
+        type: 'bar',
+        data: { labels: ['2018','2019','2020','2021','2022','2023','2024','2025'],
+            datasets: [{ label: 'Global AI Investment ($B)', data: [40.4,52.6,67.9,93.5,91.9,154.0,189.6,244.0],
+                backgroundColor: ctx => { const g=ctx.chart.ctx.createLinearGradient(0,0,0,300); g.addColorStop(0,'rgba(99,102,241,0.8)'); g.addColorStop(1,'rgba(139,92,246,0.3)'); return g; },
+                borderRadius: 6, borderSkipped: false }] },
+        options: { responsive:true, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.04)'}}, x:{grid:{display:false}} }, animation:{duration:1200,easing:'easeOutQuart'} }
+    });
+}
+
+function renderSlide3Charts() {
+    createChart('chartProductivity', {
+        type: 'bar',
+        data: { labels: ['Marketing','Customer Svc','IT/Dev','Finance','HR','Operations','Sales'],
+            datasets: [{ label:'Productivity Gain %', data:[45,42,48,35,30,38,33], backgroundColor:'rgba(16,185,129,0.7)', borderRadius:6, borderSkipped:false }] },
+        options: { indexAxis:'y', responsive:true, plugins:{legend:{position:'bottom'}}, scales:{ x:{beginAtZero:true,max:55,grid:{color:'rgba(255,255,255,0.04)'}}, y:{grid:{display:false}} }, animation:{duration:1200,easing:'easeOutQuart'} }
+    });
+    createChart('chartImpact', {
+        type: 'doughnut',
+        data: { labels:['Customer Ops','Software Dev','Marketing & Sales','R&D','Supply Chain','Risk & Compliance'],
+            datasets:[{ data:[28,22,18,14,11,7], backgroundColor:['rgba(16,185,129,0.8)','rgba(99,102,241,0.8)','rgba(6,182,212,0.8)','rgba(139,92,246,0.8)','rgba(245,158,11,0.8)','rgba(239,68,68,0.8)'], borderWidth:0, hoverOffset:8 }] },
+        options: { responsive:true, cutout:'60%', plugins:{legend:{position:'right',labels:{padding:12,font:{size:10}}}}, animation:{animateRotate:true,duration:1200} }
+    });
+}
+
+function renderSlide4Charts() {
+    createChart('chartIndiaGrowth', {
+        type: 'line',
+        data: { labels:['2020','2021','2022','2023','2024','2025','2026*','2027*','2028*'],
+            datasets:[{ label:'India AI Market ($B)', data:[1.1,1.8,2.5,3.4,4.5,6.0,8.5,12.0,17.0], borderColor:'#f59e0b', backgroundColor:'rgba(245,158,11,0.1)', fill:true, tension:0.4, pointBackgroundColor:'#f59e0b', pointRadius:5, pointHoverRadius:8 },
+            { label:'Global AI Market ($B) ÷10', data:[5.0,6.8,9.2,15.4,18.9,24.4,30.0,38.0,48.0], borderColor:'#6366f1', backgroundColor:'rgba(99,102,241,0.08)', fill:true, tension:0.4, pointBackgroundColor:'#6366f1', pointRadius:4, pointHoverRadius:7 }] },
+        options: { responsive:true, plugins:{legend:{position:'bottom'}}, scales:{ y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>'$'+v+'B'}}, x:{grid:{display:false}} }, animation:{duration:1500,easing:'easeOutQuart'} }
+    });
+    createChart('chartIndiaSectors', {
+        type: 'bar',
+        data: { labels:['IT/ITES','BFSI','Healthcare','Retail','Manufacturing','Education','Agriculture'],
+            datasets:[{ label:'AI Adoption %', data:[82,68,45,52,38,30,22],
+                backgroundColor:['rgba(99,102,241,0.8)','rgba(16,185,129,0.8)','rgba(6,182,212,0.8)','rgba(139,92,246,0.8)','rgba(245,158,11,0.8)','rgba(239,68,68,0.7)','rgba(16,185,129,0.5)'],
+                borderRadius:8, borderSkipped:false }] },
+        options: { responsive:true, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,max:100,grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>v+'%'}}, x:{grid:{display:false}} }, animation:{duration:1200,easing:'easeOutQuart'} }
+    });
+}
+
+function renderSlide5Charts() {
+    createChart('chartSkills', {
+        type: 'radar',
+        data: { labels:['Python','SQL','Excel/BI','Statistics','AI Tools','Communication','Cloud','ML Basics'],
+            datasets:[{ label:'Market Demand', data:[95,90,80,75,92,85,70,72], borderColor:'#ef4444', backgroundColor:'rgba(239,68,68,0.12)', pointBackgroundColor:'#ef4444', pointRadius:4 },
+            { label:'Avg Graduate Readiness', data:[40,35,55,30,25,50,15,20], borderColor:'#6366f1', backgroundColor:'rgba(99,102,241,0.12)', pointBackgroundColor:'#6366f1', pointRadius:4 }] },
+        options: { responsive:true, plugins:{legend:{position:'bottom'}}, scales:{ r:{ beginAtZero:true, max:100, grid:{color:'rgba(255,255,255,0.06)'}, angleLines:{color:'rgba(255,255,255,0.06)'}, pointLabels:{font:{size:10},color:'#8888a0'}, ticks:{display:false} } }, animation:{duration:1200} }
+    });
+}
+
+function renderSlide6Charts() {
+    createChart('chartROI', {
+        type: 'bar',
+        data: { labels:['Banking','Healthcare','Retail','Manufacturing','Telecom','Energy'],
+            datasets:[{ label:'Avg ROI %', data:[350,280,310,240,220,190],
+                backgroundColor:['rgba(99,102,241,0.8)','rgba(16,185,129,0.8)','rgba(6,182,212,0.8)','rgba(245,158,11,0.8)','rgba(139,92,246,0.8)','rgba(239,68,68,0.8)'],
+                borderRadius:8, borderSkipped:false }] },
+        options: { responsive:true, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>v+'%'}}, x:{grid:{display:false}} }, animation:{duration:1200,easing:'easeOutQuart'} }
+    });
+    createChart('chartUseCases', {
+        type: 'bar',
+        data: { labels:['Fraud Detection','Chatbots','Predictive Maint.','Personalization','Risk Analysis','Document AI'],
+            datasets:[{ label:'Banking', data:[88,75,20,65,82,70], backgroundColor:'rgba(99,102,241,0.7)', borderRadius:4, borderSkipped:false },
+            { label:'Retail', data:[30,70,15,90,40,55], backgroundColor:'rgba(6,182,212,0.7)', borderRadius:4, borderSkipped:false },
+            { label:'Manufacturing', data:[15,25,85,20,35,40], backgroundColor:'rgba(245,158,11,0.7)', borderRadius:4, borderSkipped:false }] },
+        options: { responsive:true, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}, scales:{ y:{beginAtZero:true,max:100,grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>v+'%'}}, x:{grid:{display:false},ticks:{font:{size:9}}} }, animation:{duration:1200,easing:'easeOutQuart'} }
+    });
+}
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => renderChartsForSlide(2), 800);
+    setTimeout(() => checkScrollable(), 1000);
+});
+</script>
+</body>
+</html>
