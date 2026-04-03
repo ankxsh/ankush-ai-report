@@ -15,7 +15,7 @@ An interactive, data-driven presentation analyzing AI's evolution, business impa
 2. **Open** `index.html` in any modern browser (Chrome, Edge, Firefox)
 3. **Navigate** using `← →` arrow keys or the dot navigation at the bottom
 
-> No installation, no npm, no build step required. Just open and present.
+
 
 ---
 
